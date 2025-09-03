@@ -3,7 +3,8 @@ function __auto_source_nvm --on-variable PWD --description "Activate/Deactivate 
 
     set --local dirs (pwd)
     if git rev-parse --show-toplevel &>/dev/null
-        set --append dirs (realpath (git rev-parse --show-toplevel))
+        set -l root (realpath (git rev-parse --show-toplevel))
+        test "$root" != (pwd); and set --append dirs $root
     end
 
     set --local NV_FILE_NAMES .nvmrc .node-version
@@ -18,3 +19,5 @@ function __auto_source_nvm --on-variable PWD --description "Activate/Deactivate 
 
     nvm use --silent default
 end
+
+__auto_source_nvm
