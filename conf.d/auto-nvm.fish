@@ -17,7 +17,7 @@ function __auto_source_nvm --on-variable PWD --description "Activate/Deactivate 
         end
     end
 
-    nvm use --silent default
+    nvm use --silent default 2>/dev/null; or nvm use --silent system 2>/dev/null; or true
 end
 
 __auto_source_nvm
