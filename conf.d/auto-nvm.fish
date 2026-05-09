@@ -10,7 +10,7 @@ function __auto_source_nvm --on-variable PWD --description "Activate/Deactivate 
     set --local NV_FILE_NAMES .nvmrc .node-version
     for nv_file in $dirs/$NV_FILE_NAMES
         if test -e "$nv_file"
-            set ver (head -n 1 $nv_file)
+            set ver (head -n 1 "$nv_file" | string trim)
             if nvm use --silent $ver
                 return
             end
@@ -20,4 +20,7 @@ function __auto_source_nvm --on-variable PWD --description "Activate/Deactivate 
     nvm use --silent default 2>/dev/null; or nvm use --silent system 2>/dev/null; or true
 end
 
-__auto_source_nvm
+function __auto_source_nvm_on_prompt --on-event fish_prompt
+    functions --erase __auto_source_nvm_on_prompt
+    __auto_source_nvm
+end
